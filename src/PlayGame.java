@@ -5,16 +5,14 @@ public class PlayGame
     private String name;
     private int[][] table;
     private Grid grid;
-    private Dice dice;
     private int diceVal=-1;
+    private int score =0;
 
     public PlayGame()
     {
         name = "Not set!";
         grid = new Grid();
         table = grid.getGrid();
-        dice = new Dice();
-
     }
 
 
@@ -34,7 +32,7 @@ public class PlayGame
 
     public void playerPrintTable()
     {
-        System.out.println("\n"+name+"'s table: ");
+        System.out.println("\n"+ Colors.ANSI_GREEN+ name+ Colors.ANSI_RESET+"'s table: ");
         grid.printTable();
     }
 
@@ -47,14 +45,16 @@ public class PlayGame
 
         if (ans.equals("r"))
         {
-            diceVal= dice.getRollDice();
+            Dice.setRollDice();
+            diceVal= Dice.getRollDice();
             System.out.println("You roll your dice and get: "+ diceVal);
         }
         else
         {
             while (!ans.equals("r"))
             {
-                diceVal= dice.getRollDice();
+                Dice.setRollDice();
+                diceVal= Dice.getRollDice();
                 System.out.print("Please press (r) to roll: ");
                 ans = input.nextLine();
             }
@@ -70,6 +70,57 @@ public class PlayGame
         int comma = coordinates.indexOf(",");
         int x = Integer.parseInt(coordinates.substring(1, comma));
         int y = Integer.parseInt(coordinates.substring(comma+2, coordinates.length()-1));
-        grid.updateGrid(x, y, diceVal);
+
+        //checks if the given coordinate is empty or not
+        while (table[y-1][x-1] !=0)
+        {
+            System.out.print("That coordinate already has a value please try another coordinate: ");
+            coordinates = input.nextLine();
+            comma = coordinates.indexOf(",");
+            x = Integer.parseInt(coordinates.substring(1, comma));
+            y = Integer.parseInt(coordinates.substring(comma+2, coordinates.length()-1));
+        }
+        if (table[y-1][x-1] == 0)
+        {
+            grid.updateGrid(x, y, diceVal);
+        }
+    }
+
+    public int calcScore()
+    {
+        //horizontal count
+        for (int row =0; row< table.length; row++)
+        {
+            for (int column =0; column< table[0].length-1; column++)
+            {
+                    if (table[row][column] == table[row][column+1])
+                    {
+                        score+= table[row][column] + table[row][column+1];
+                        column++;
+                    }
+                    if (column != 0 && table[row][column]== table[row][column-1])
+                    {
+                        score+= table[row][column];
+                    }
+            }
+        }
+        //vertical count
+        for (int column =0; column < table[0].length; column++)
+        {
+            for (int row =0; row< table.length-1; row++)
+            {
+                if (table[row][column] == table[row+1][column])
+                {
+                    score+= table[row][column] + table[row+1][column];
+                    row++;
+                }
+                if (row!=0 && table[row][column]== table[row-1][column])
+                {
+                    score+= table[row][column];
+                }
+            }
+        }
+
+        return score;
     }
 }

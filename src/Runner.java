@@ -11,6 +11,7 @@ public class Runner
             newGame.printDiceRoll();
             newGame.printUpdateTable();
         }
+        System.out.println("\nYour score was: "+ Colors.ANSI_CYAN+ newGame.calcScore()+ Colors.ANSI_RESET+ "!");
 
 
 

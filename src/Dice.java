@@ -1,13 +1,14 @@
 public class Dice
 {
-    private int rollDice;
+    private static int rollDice;
 
-    public Dice ()
+
+    public static void setRollDice()
     {
         rollDice = (int)(Math.random()*(10))+1;
     }
 
-    public int getRollDice()
+    public static int getRollDice()
     {
         return rollDice;
     }
