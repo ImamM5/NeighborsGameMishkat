@@ -1,7 +1,10 @@
+import java.util.*;
 public class Runner
 {
+
     public static void main(String [] args)
     {
+
         PlayGame newGame = new PlayGame();
         newGame.setName();
         newGame.printIntro();
@@ -11,8 +14,8 @@ public class Runner
             newGame.printDiceRoll();
             newGame.printUpdateTable();
         }
+        newGame.playerPrintTable();
         System.out.println("\nYour score was: "+ Colors.ANSI_CYAN+ newGame.calcScore()+ Colors.ANSI_RESET+ "!");
-
 
 
     }

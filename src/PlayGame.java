@@ -98,7 +98,7 @@ public class PlayGame
                         score+= table[row][column] + table[row][column+1];
                         column++;
                     }
-                    if (column != 0 && table[row][column]== table[row][column-1])
+                    else if (column != 0 && table[row][column]== table[row][column-1])
                     {
                         score+= table[row][column];
                     }
@@ -114,7 +114,7 @@ public class PlayGame
                     score+= table[row][column] + table[row+1][column];
                     row++;
                 }
-                if (row!=0 && table[row][column]== table[row-1][column])
+                else if (row!=0 && table[row][column]== table[row-1][column])
                 {
                     score+= table[row][column];
                 }
